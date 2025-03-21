@@ -24,7 +24,10 @@ Using eksctl:
 eksctl create cluster --name my-eks-cluster --region eu-north-1 
 ```
 
-Verify that the cluster is running:
+Update the kubeconfig file and Verify that the cluster is running on the command line:
+``` bash
+aws eks update-kubeconfig --name <cluster-name>
+```
 
 ``` bash
 kubectl get nodes
@@ -75,38 +78,38 @@ Verify that the secret was created:
 kubectl get secrets
 ```
 
-# Step 5: Create Kubernetes Deployment File (kubernetes/deployment.yaml)
+# Step 5: Apply Kubernetes Deployment File (kubernetes/deployment.yaml)
 
 Modify the deployment file to:
-• Use ECR image
-• Ensure the image is always pulled (imagePullPolicy: Always)
-• Reference the ecr-secret for authentication
+- Use your ECR image
+- Ensure the image is always pulled (imagePullPolicy: Always)
+- Reference the ecr-secret for authentication
 
 Apply the deployment:
 ``` bash
 kubectl apply -f kubernetes/deployment.yaml
 ```
 
-# Step 6: Create a Kubernetes Service (kubernetes/service.yaml)
+# Step 6: Apply a Kubernetes Service (kubernetes/service.yaml)
 
 Apply the service:
 ``` bash
 kubectl apply -f kubernetes/service.yaml
 ```
 
-# Step 7: Configure Jenkins container 
+# Step 7: Configure Jenkins container to automate the process 
 
 1. Install  kubectl command line tool inside Jenkins container.
 2. Install aws-iam-authenticator tool inside Jenkins container.
 3. Create kubeconfig file to connect to EKS cluster.
 4. Add AWS credentials on Jenkins for AWS account authentication.
 
-# Step 8: Automate Deployment with Jenkins
+# Step 8: Create and build your pipeline to execute the job
 
 Take a look at the Jenkins file from the project folder.
 
 
-# Step 9: Verify Deployment
+# Step 9: Verify Deployment on terminal
 
 Check deployed pods:
 ``` bash
