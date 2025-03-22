@@ -100,8 +100,22 @@ kubectl apply -f kubernetes/service.yaml
 # Step 7: Configure Jenkins container to automate the process 
 
 1. Install  kubectl command line tool inside Jenkins container.
+``` bash
+curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl; chmod +x ./kubectl; mv ./kubectl /usr/local/bin/kubectl
+```
+
 2. Install aws-iam-authenticator tool inside Jenkins container.
-3. Create kubeconfig file to connect to EKS cluster.
+``` bash
+curl -Lo aws-iam-authenticator https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/v0.6.11/aws-iam-authenticator_0.6.11_linux_amd64
+chmod +x ./aws-iam-authenticator
+mv ./aws-iam-authenticator /usr/local/bin
+```
+
+3. Copy your config file to connect to EKS cluster.
+``` bash
+docker cp config "YOUR DOCKER CONTAINER ID":/var/jenkins_home/.kube/
+```
+
 4. Add AWS credentials on Jenkins for AWS account authentication.
 
 # Step 8: Create and build your pipeline to execute the job
